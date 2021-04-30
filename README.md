@@ -15,3 +15,6 @@ University project for "Modelling of Physical Systems" - planetary system simula
 * function / class to show final results
 	* scaling of simulation speed
 	* scaling simulation size
+
+## Sources:
+* https://en.wikipedia.org/wiki/Numerical_model_of_the_Solar_System#Modern_method this one can be useful

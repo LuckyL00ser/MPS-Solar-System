@@ -5,6 +5,26 @@ import matplotlib.pyplot as plt
 from itertools import count
 from matplotlib.animation import FuncAnimation
 
+
+def count_to(max_value: int, start=0, step=1) -> int:
+    """
+    Counts up to max value then restarts
+
+    :param max_value: maximum value
+    :param start:
+    :param step: step size between values
+    :return: next step position
+    """
+    n = start
+    while True:
+        if n <= max_value:
+            yield n
+            n += step
+        else:
+            n = 0
+            yield n
+
+
 radius_list = [6.96340000E8, 2439.7, 6051.8, 6371, 3389.5, 69911, 58232, 25362, 25622]
 maxDim = 3.0E12
 
@@ -12,6 +32,7 @@ read_data = pd.read_csv("results.csv", header=0)
 del read_data["Venus_X"]
 del read_data["Venus_Y"]
 del read_data["Venus_Z"]
+
 planet_names = [name.split("_")[0] for name in read_data.columns[:-1:3]]
 
 planet_records = read_data.to_numpy()
@@ -29,11 +50,11 @@ plt.xlim([-maxDim, maxDim])
 plt.ylim([-maxDim, maxDim])
 ax.set_zlim(-maxDim, maxDim)
 
-time_counter = count()
 
+time_counter = count_to(max_value=planets.shape[1], step=1)
 
 def animation(i):
-    time_step = next(time_counter)*10
+    time_step = next(time_counter)
     plt.cla()
     for index in range(planets.shape[0]):
         r = max(radius_list[index], maxDim / 50)
